@@ -9,6 +9,11 @@ app.listen("8000", () => {
   console.log("PORT is running on 8000");
 })
 
+var secret = "841235432344ADRA";
+let crypto = require('crypto-js');
+
+var decrypter = require("./decrypt");
+
 app.get("/api/welcome", (req, res) => {
   // res.send("Billion Lives Backend Project")
   if (req.query.username == "Saras" && req.query.password == "qwerty") {
@@ -96,6 +101,12 @@ app.put("/api/user", (req, res)=>{
   res.json({status:false, message:"invalid user id"});
 })
 
+
+app.post("/login", decrypter.decryptBody, (req, res)=>{
+  console.log("body", req.body);
+  res.json({status:true, message: "decryptor API called" });
+})
+
 //GET -> 
 //POST -> Data addition
 //PUT -> Data updation
@@ -105,3 +116,5 @@ app.put("/api/user", (req, res)=>{
 //Assignment 1 - Create a Login API and implement validations. 
 
 //Assignment 2 - Create APIs for the UI implemented in the React Project and map it to the UI. 
+
+//Assignment 3 - Create a postman environment to send the payload as decrypted data for POST and PUT method only.
