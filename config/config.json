@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Bep0s1t1ve$92",
+    "database": "billionlives",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "Bep0s1t1ve$92",
+    "database": "billionlives",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "Bep0s1t1ve$92",
+    "database": "billionlives",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
