@@ -20,6 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       }
+    },
+    group_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      // validate: {
+      //   notEmpty: true
+      // }
     }
   })
 
