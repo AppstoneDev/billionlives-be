@@ -32,27 +32,23 @@ app.post("/user", (req, res) => {
 
 
 app.get("/user", (req, res) => {
-  // Userdetails.belongsTo(Usergroup, { targetKey: 'id', foreignKey: 'group_id' });
 
-  // Userdetails.associate((models) => {
-  //   Userdetails.hasOne(models.Usergroup, {
-  //     foreignKey : group_id,
-  //     as : "group_details"
-  //   })
-  // })
-  Userdetails.associate = function (models) {
-    Userdetails.hasOne(models.Usergroup, {
-      foreignKey: group_id,
-      as: "group_details"
-    })
-  }
+  //Userdetails - primary table
+  //Usergroup - secondary table
+
+
+
+  Usergroup.belongsTo(Userdetails, { foreignKey: 'id', targetKey: 'group_id' })
+  Userdetails.hasMany(Usergroup, { foreignKey: 'id', sourceKey: 'group_id' })
+
   Userdetails.findAll({
-    // include: [
-    //   {
-    //     model: Usergroup,
-    //     where: { "id": Userdetails.group_id }
-    //   }
-    // ]
+    attributes: ['id', 'name', 'email', 'mobile'],
+    include: [
+      {
+        model: Usergroup,
+        attributes: ['id', 'name']
+      }
+    ]
   })
     .then((users) => {
       res.json({ status: true, message: "user details found", result: users });

@@ -5,7 +5,7 @@ let cors = require('cors');
 
 const dbConnector = require('./models');
 
-dbConnector.sequelize.sync().then(() => {
+dbConnector.sequelize.sync({force : false, alter : true}).then(() => {
   app.listen("8000", ()=>{
     console.log("PORT is running on 8000");
   })
