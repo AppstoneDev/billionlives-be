@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 let dbServer = null;
 
@@ -32,5 +32,6 @@ function perfromDBOperation(query, callback) {
 
 module.exports = {
   connectToDB,
-  perfromDBOperation
+  perfromDBOperation, 
+  dbServer
 }

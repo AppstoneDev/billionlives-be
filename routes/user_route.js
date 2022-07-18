@@ -5,22 +5,51 @@ const { Userdetails } = require("../models");
 const { Usergroup } = require('../models');
 const { models } = require('../models')
 
+const dbConnector = require('../dbconnector');
+const db = require('../models');
+
 
 app.post("/user", (req, res) => {
   req.body = JSON.parse(JSON.stringify(req.body))
   if (req.body.hasOwnProperty("name")
     && req.body.hasOwnProperty("email")) {
 
-    Userdetails.create({
-      name: req.body.name,
-      email: req.body.email,
-      mobile: req.body.mobile,
-      group_id: req.body.group_id
-    }).then(() => {
-      res.json({ status: true, message: "Data inserted successfully" })
-    }).catch((err) => {
-      res.json({ status: false, message: "Error occured while inserting " + err });
+    // Userdetails.create({
+    //   name: req.body.name,
+    //   email: req.body.email,
+    //   mobile: req.body.mobile,
+    //   group_id: req.body.group_id
+    // }).then(() => {
+    //   res.json({ status: true, message: "Data inserted successfully" })
+    // }).catch((err) => {
+    //   res.json({ status: false, message: "Error occured while inserting " + err });
+    // })
+
+    var query = "";
+
+    dbConnector.dbServer.transaction(query, function(error){
+      if(error){
+        res.json({status:false, message: "Error occured "+error});
+      }
+
+      var query1 = "IS for performing operation in the UserDetails"
+      dbConnector.perfromDBOperation(query, (error1, result, fields) =>{
+        if(error1){
+          dbConnector.dbServer.rollBack()
+        }
+
+        var query2 = "Is for inserting into the User Groups Table"
+
+        dbConnector.perfromDBOperation(query2, (error2, result1, fields) =>{
+          if(error2){
+          dbConnector.dbServer.rollBack();
+          } 
+
+          dbConnector.dbServer.commit();
+        } )
+      })
     })
+
   } else {
     if (!req.body.hasOwnProperty("name")) {
       res.json({ status: false, message: "name parameter is missing" });
