@@ -8,11 +8,20 @@ const { models } = require('../models')
 const dbConnector = require('../dbconnector');
 const db = require('../models');
 
+const mongodb = require("../mongodbConnector")
+const collection = require("../collection")
+
+
+//survey_name, survery_description, survey_start_date, survery_end_date and created_on
 
 app.post("/user", (req, res) => {
   req.body = JSON.parse(JSON.stringify(req.body))
   if (req.body.hasOwnProperty("name")
     && req.body.hasOwnProperty("email")) {
+
+
+      
+      
 
     // Userdetails.create({
     //   name: req.body.name,

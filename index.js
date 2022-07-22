@@ -4,7 +4,16 @@ const routes = require('../billionlives-be/routes/index')
 let cors = require('cors');
 
 // const dbConnector = require('./models');
-const dbConnector = require('./dbconnector');
+// const dbConnector = require('./dbconnector');
+
+const db = require("./mongodbConnector");
+
+
+db.connect(()=>{
+  app.listen("8000", ()=>{
+    console.log("PORT is running on 8000");
+  })
+})
 
 // dbConnector.sequelize.sync({}).then(() => {
 //   app.listen("8000", ()=>{
@@ -18,12 +27,11 @@ app.use(cors())
 app.use("/api", routes);
 
 
-dbConnector.connectToDB(()=> {
-    app.listen("8000", ()=>{
-    console.log("PORT is running on 8000");
-  })
-})
- 
+// dbConnector.connectToDB(()=> {
+//     app.listen("8000", ()=>{
+//     console.log("PORT is running on 8000");
+//   })
+// })
 
 // var secret = "841235432344ADRA";
 // let crypto = require('crypto-js');
